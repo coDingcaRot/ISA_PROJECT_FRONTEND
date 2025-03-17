@@ -9,8 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
 
+        // Checks password
         if (password !== confirmPassword) {
-            alert('Passwords do not match!');
+            alert('Passwords do not match!'); //add pop up
             return;
         }
 
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // make a creation account succesful
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
