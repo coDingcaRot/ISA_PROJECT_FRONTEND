@@ -1,27 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
-    
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value;
-        
-        // Basic validation
-        if (!username || !password) {
+
+        const email = document.getElementById('inputEmail').value.trim();
+        const password = document.getElementById('inputPassword').value;
+
+        if (!email || !password) {
             alert('Please fill in all fields!');
             return;
         }
-        
+
         const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
                 if (this.status == 200) {
                     const data = JSON.parse(this.responseText);
-                    // Store the token in localStorage for future authenticated requests
                     localStorage.setItem('token', data.token);
                     alert('Login successful!');
-                    window.location.href = 'index.html'; // Redirect to main page after login
+                    if (data.admin === true) {
+                        window.location.href = 'admin-homepage.html';
+                    } else {
+                        window.location.href = 'user-homepage.html';
+                    }
                 } else {
                     try {
                         const data = JSON.parse(this.responseText);
@@ -32,16 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         };
-        
-        // TODO: change to the correct endpoint, should be making the request to the backend (MongoDB)
-        xhttp.open('POST', 'http://localhost:3000/api/users/login', true);
+
+        xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/checkUser', true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
-        
+
         const data = JSON.stringify({
-            username,
+            email,
             password
         });
-        
+
         xhttp.send(data);
     });
 });

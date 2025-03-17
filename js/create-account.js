@@ -9,9 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
 
-        // Checks password
         if (password !== confirmPassword) {
-            alert('Passwords do not match!'); //add pop up
+            alert('Passwords do not match!');
             return;
         }
 
@@ -20,14 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // make a creation account succesful
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
                 if (this.status == 200) {
                     const data = JSON.parse(this.responseText);
                     alert('Account created successfully!');
-                    window.location.href = 'login.html';
+                    window.location.href = 'user-homepage.html';
                 } else {
                     try {
                         const data = JSON.parse(this.responseText);
@@ -39,8 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // TODO: change to the correct endpoint, should be making the request to the backend (MongoDB)
-        xhttp.open('POST', 'http://localhost:3000/api/users/register', true);
+        xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/createUser', true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
 
         const data = JSON.stringify({
