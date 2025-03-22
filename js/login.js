@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.readyState == 4) {
                 if (this.status == 200) {
                     //authenticate its cookie and based on the result of that cookie we can either go through or not.
-
+                    
                     const data = JSON.parse(this.responseText);
                     alert('Login successful!');
                     if (data.admin === true) {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        xhttp.open('POST', 'http://localhost:3000/checkUser', true);
+        xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/checkUser', true);
         xhttp.withCredentials = true 
         xhttp.setRequestHeader('Content-Type', 'application/json');
 

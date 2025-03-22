@@ -8,8 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(data.message || 'Login failed. Please check your credentials.');
             } else {
                 try {
-                    // const data = JSON.parse(this.responseText);
-                    // localStorage.setItem('token', data.token);
                    if (data.admin === true) {
                        window.location.href = 'admin-homepage.html';
                    } else {
@@ -20,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
-    xhttp.open('GET', 'http://localhost:3000/authenticate', true);
+    xhttp.open('GET', 'https://isa-project-backend-ultkx.ondigitalocean.app/authenticate', true);
     xhttp.withCredentials = true; // includes cookies in response
     xhttp.send();
 });
