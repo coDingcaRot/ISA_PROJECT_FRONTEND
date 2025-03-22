@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/createUser', true);
+        xhttp.open('POST', 'http://localhost:3000/createUser', true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
 
         const data = JSON.stringify({
