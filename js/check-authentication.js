@@ -1,26 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("client origin: " + window.location.origin);
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
-            if (this.status == 403 || this.status == 401) {
-                window.location.href = 'unauthorized.html'
-                alert(data.message || 'Login failed. Please check your credentials.');
+            // alert(`Authenticating`)
+            const data = JSON.parse(this.responseText);
+
+            if (this.status == 200) {
+                alert(`Welcome ${data.username}`);  
             } else {
-                try {
-                   if (data.admin === true) {
-                       window.location.href = 'admin-homepage.html';
-                   } else {
-                       window.location.href = 'user-homepage.html';
-                   }
-                } catch (error) {
-                }
+                window.location.href = 'unauthorized.html'
             }
         }
     };
     xhttp.open('GET', 'https://isa-project-backend-ultkx.ondigitalocean.app/authenticate', true);
     // xhttp.open('GET', 'http://localhost:3000/authenticate', true);
-    xhttp.withCredentials = true; // includes cookies in response
-    xhttp.crossDomain = true;
+    xhttp.withCredentials = true; 
     xhttp.send();
 });
