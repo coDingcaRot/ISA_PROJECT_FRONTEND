@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const email = document.getElementById('inputEmail').value.trim();
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {email,password}
         );
 
-        xhttp.send(data);
+            xhttp.send(data);
+        }, 5000)
     });
 });
