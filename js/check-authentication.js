@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     xhttp.open('GET', 'https://isa-project-backend-ultkx.ondigitalocean.app/authenticate', true);
+    // xhttp.open('GET', 'http://localhost:3000/authenticate', true);
     xhttp.withCredentials = true; // includes cookies in response
     xhttp.send();
 });
