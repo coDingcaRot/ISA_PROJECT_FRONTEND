@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const email = document.getElementById('inputEmail').value.trim();
@@ -12,43 +12,34 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4) {
-                if (this.status == 200) {
-                    //authenticate its cookie and based on the result of that cookie we can either go through or not.
-                    
-                    const data = JSON.parse(this.responseText);
-                    alert('Login successful!');
-                    if (data.admin === true) {
-                        window.location.href = 'admin-homepage.html';
-                        return
-                    } else {
-                        window.location.href = 'user-homepage.html';
-                        return
-                    }
+        try {
+            const response = await fetch('https://isa-project-backend-ultkx.ondigitalocean.app/checkUser', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            // Wait for the response and parse JSON
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Login successful!');
+                if (data.admin === true) {
+                    window.location.href = 'admin-homepage.html';
                 } else {
-                    try {
-                        const data = JSON.parse(this.responseText);
-                        alert(data.message || 'Login failed. Please check your credentials.');
-                    } catch (error) {
-                        alert('Login failed. Please try again.');
-                        console.log(error)
-                    }
+                    window.location.href = 'user-homepage.html';
                 }
+            } else {
+                // Handle error messages from the server
+                alert(data.message || 'Login failed. Please check your credentials.');
             }
-        };
-
-        xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/checkUser', true);
-        // xhttp.open('POST', 'http://localhost:3000/checkUser', true);
-        xhttp.withCredentials = true 
-        xhttp.setRequestHeader('Content-Type', 'application/json');
-
-        const data = JSON.stringify({
-            email,
-            password
-        });
-
-        xhttp.send(data);
+        } catch (error) {
+            // Handle network errors or unexpected issues
+            console.error('Error:', error);
+            alert('Login failed. Please try again.');
+        }
     });
 });
