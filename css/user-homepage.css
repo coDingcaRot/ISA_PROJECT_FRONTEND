@@ -1,0 +1,68 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}      
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    padding: 30px;
+}
+.btn-custom {
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+.btn-primary {
+    background: #ff7eb3;
+    border: none;
+}
+.btn-primary:hover {
+    background: #ff4f88;
+}
+.btn-success {
+    background: #57cc99;
+    border: none;
+}
+.btn-success:hover {
+    background: #38a37a;
+}
+.btn-danger {
+    background: #ff6b6b;
+    border: none;
+}
+.btn-danger:hover {
+    background: #d9534f;
+}
+.api-usage {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+}
+.reload-btn {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.reload-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+}

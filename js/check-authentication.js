@@ -2,11 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
-            alert(`Authenticating`)
+            // alert(`Authenticating`)
             const data = JSON.parse(this.responseText);
 
             if (this.status == 200) {
-                alert(`Welcome ${data.username}`);  
+                // alert(`Welcome ${data.username}`);  
             } else {
                 window.location.href = 'unauthorized.html'
             }
