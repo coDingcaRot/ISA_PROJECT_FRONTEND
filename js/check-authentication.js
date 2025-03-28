@@ -4,9 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.readyState == 4) {
             // alert(`Authenticating`)
             const data = JSON.parse(this.responseText);
+            localStorage.setItem('welcomeState') == true;
 
             if (this.status == 200) {
-                // alert(`Welcome ${data.username}`);  
+                alert(`Welcome ${data.username}`); 
             } else {
                 window.location.href = 'unauthorized.html'
             }

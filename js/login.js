@@ -43,9 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.withCredentials = true;
         
-        const data = JSON.stringify(
-            {email,password}
-        );
+        const data = JSON.stringify({
+            email, 
+            password
+        });
 
         xhttp.send(data);
     }, 5000)
