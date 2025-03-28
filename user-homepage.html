@@ -47,20 +47,70 @@
 
     <!-- JavaScript -->
     <script>
-        // Fetch API usage count from backend
+        function getEmailFromToken() {
+            const cookies = document.cookie.split("; ");
+            const tokenCookie = cookies.find(row => row.startsWith("userCookie="));
+
+            if (!tokenCookie) return null;
+
+            try {
+                const token = tokenCookie.split("=")[1];
+                const payloadBase64 = token.split(".")[1]; // Extract the payload part of JWT
+                const payload = JSON.parse(atob(payloadBase64));
+                return payload.email;
+            } catch (error) {
+                console.error("Error decoding token:", error);
+                return null;
+            }
+        }
+
+        // // Fetch API usage count from backend
+        // async function fetchApiUsage() {
+        //     try {
+        //         document.getElementById("api-usage-count").innerText = "Fetching...";
+                
+        //         const response = await fetch('https://isa-project-backend-ultkx.ondigitalocean.app/getUser', {
+        //             method: 'GET',
+        //             credentials: 'include', // Include cookies
+        //             headers: {
+        //                 'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify({
+        //                 email: '' // You may need to send the user's email or get it from a cookie
+        //             })
+        //         });
+
+        //         if (!response.ok) {
+        //             throw new Error('Failed to fetch API usage');
+        //         }
+
+        //         const data = await response.json();
+        //         if (data.user && data.user.apiRequestsLeft !== undefined) {
+        //             document.getElementById("api-usage-count").innerText = data.user.apiRequestsLeft;
+        //         } else {
+        //             document.getElementById("api-usage-count").innerText = "N/A";
+        //         }
+        //     } catch (error) {
+        //         console.error('Error fetching API usage:', error);
+        //         document.getElementById("api-usage-count").innerText = "Error";
+        //     }
+        // }
         async function fetchApiUsage() {
             try {
                 document.getElementById("api-usage-count").innerText = "Fetching...";
                 
+                const email = getEmailFromToken();
+                if (!email) {
+                    throw new Error("Email not found in token.");
+                }
+
                 const response = await fetch('https://isa-project-backend-ultkx.ondigitalocean.app/getUser', {
-                    method: 'POST',
-                    credentials: 'include', // Include cookies
+                    method: 'POST', // Use POST if the backend requires it
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        email: '' // You may need to send the user's email or get it from a cookie
-                    })
+                    body: JSON.stringify({ email })
                 });
 
                 if (!response.ok) {
@@ -78,6 +128,10 @@
                 document.getElementById("api-usage-count").innerText = "Error";
             }
         }
+
+        // Load API usage when page loads
+        document.addEventListener('DOMContentLoaded', fetchApiUsage);
+
 
         // Load API usage when page loads
         document.addEventListener('DOMContentLoaded', fetchApiUsage);
