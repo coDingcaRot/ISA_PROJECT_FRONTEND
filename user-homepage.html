@@ -50,9 +50,10 @@
         function getEmailFromToken() {
             const cookies = document.cookie.split("; ");
             const tokenCookie = cookies.find(row => row.startsWith("userCookie="));
-
+            console.log(tokenCookie)
             if (!tokenCookie) return null;
 
+            console.log("cookie not null")
             try {
                 const token = tokenCookie.split("=")[1];
                 const payloadBase64 = token.split(".")[1]; // Extract the payload part of JWT
