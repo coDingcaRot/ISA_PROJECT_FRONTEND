@@ -20,14 +20,19 @@ body {
     transition: all 0.3s ease-in-out;
 }
 .btn-primary {
-    background: #ff7eb3;
+    /* background: #ff7eb3; */
     border: none;
 }
 .btn-primary:hover {
-    background: #ff4f88;
+    /* background: #ff4f88; */
 }
 .btn-success {
     background: #57cc99;
+    border: none;
+}
+.btn-create{
+    background: purple;
+    color : white;
     border: none;
 }
 .btn-success:hover {
@@ -37,8 +42,13 @@ body {
     background: #ff6b6b;
     border: none;
 }
+.btn-warning{
+    /* background: #ff6b6b; */
+    color: white;
+    border: none;
+}
 .btn-danger:hover {
-    background: #d9534f;
+    /* background: #d9534f; */
 }
 .api-usage {
     position: fixed;
