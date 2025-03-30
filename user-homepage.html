@@ -91,13 +91,13 @@
                 
                 if (!response.ok) throw new Error('Failed to load user data');
                 
-                const apiRemaining = response.headers.get('X-API-Requests-Remaining');
+                // const apiRemaining = response.headers.get('X-API-Requests-Remaining');
                 const data = await response.json();
                 
                 console.log('User:', data.user);
-                console.log('API Requests Left:', apiRemaining);
+                console.log('API Requests Left:', data.apiRequestsLeft);
                 
-                document.getElementById('api-usage-count').textContent = apiRemaining;
+                document.getElementById('api-usage-count').textContent = data.apiRequestsLeft;
                 // document.getElementById('username').textContent = data.user.username;
                 
             } catch (error) {
