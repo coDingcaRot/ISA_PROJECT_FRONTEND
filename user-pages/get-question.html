@@ -11,6 +11,21 @@
     <link rel="stylesheet" href="../css/user-page-css/update-question.css">
     <link rel="stylesheet" href="../css/user-page-css/get-question.css">
     <title>Get Question</title>
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3; /* Smaller border */
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px; /* Smaller width */
+            height: 20px; /* Smaller height */
+            animation: spin 1s linear infinite; /* Optional: Adjust animation speed */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <div class="card shadow-sm">
@@ -22,16 +37,10 @@
             </div>
             <div class="audio-container" id="audioContainer">
                 <p>Question Audio</p>
-                <div>
-                    <audio controls="" id="answerAudio">
-                        <source type="audio/wav" src="../templates/0.wav"> 
-                    </audio>
+                <div id="questionAudioContainer">
                 </div>
                 <p>Answer Audio</p>
-                <div>
-                    <audio controls="" id="answerAudio">
-                        <source type="audio/wav" src="../templates/0.wav"> 
-                    </audio>
+                <div id="answerAudioContainer">
                 </div>
             </div>
             <div class="d-flex justify-content-between mt-3">
@@ -43,28 +52,5 @@
 
     <script src="../js/user-get-question.js"></script>
     <script src="../js/check-authentication.js"></script>
-
-    <!-- Test script most definetly not needed -->
-    <script>
-        // Function to append audio dynamically
-        function appendAudio(audioUrl) {
-            const audioContainer = document.getElementById("audioContainer");
-            audioContainer.innerHTML = ""; // Clear previous content
-            
-            const audioElement = document.createElement("audio");
-            audioElement.controls = true;
-            audioElement.src = audioUrl;
-            
-            audioContainer.appendChild(audioElement);
-        }
-
-        // // Example of appending an audio file dynamically (replace with actual API call)
-        // document.addEventListener("DOMContentLoaded", function () {
-        //     // Simulate fetching audio from API
-        //     setTimeout(() => {
-        //         appendAudio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
-        //     }, 2000);
-        // });
-    </script>
 </body>
 </html>
