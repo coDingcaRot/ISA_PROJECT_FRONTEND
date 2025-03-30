@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset API Requests</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .btn-custom {
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+            padding: 10px 20px;
+        }
+        .btn-primary {
+            background: #ff7eb3;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: #ff4f88;
+            transform: translateY(-2px);
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+        }
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: none;
+            border-color: #ff7eb3;
+        }
+        .result-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card text-center">
+            <h2 class="mb-4"><i class="bi bi-arrow-clockwise"></i> Reset API Requests</h2>
+            
+            <div class="mb-4 text-start">
+                <label for="email" class="form-label">User Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter user's email" value="nnn@gmail.com">
+            </div>
+            
+            <button id="reset-btn" class="btn btn-primary btn-custom w-100 mb-4">
+                <span id="reset-text">Reset API Count</span>
+                <span id="reset-spinner" class="spinner-border spinner-border-sm" role="status" style="display: none;"></span>
+            </button>
+            
+            <div id="result-card" class="result-card text-start">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Status:</span>
+                    <strong id="result-message"></strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>User:</span>
+                    <strong id="result-user"></strong>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>New Limit:</span>
+                    <strong id="result-count" class="text-success"></strong>
+                </div>
+            </div>
+            
+            <a href="./user-homepage.html" class="btn btn-outline-light btn-custom mt-3 w-100">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById('reset-btn').addEventListener('click', async () => {
+            const email = document.getElementById('email').value.trim();
+            const btn = document.getElementById('reset-btn');
+            const spinner = document.getElementById('reset-spinner');
+            const text = document.getElementById('reset-text');
+            
+            if (!email) {
+                alert('Please enter a valid email');
+                return;
+            }
+            
+            try {
+                // Show loading state
+                btn.disabled = true;
+                spinner.style.display = 'inline-block';
+                text.textContent = 'Processing...';
+                
+                const response = await fetch('https://isa-project-backend-ultkx.ondigitalocean.app/resetApiRequests', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+                
+                const data = await response.json();
+                
+                // Show results
+                document.getElementById('result-message').textContent = data.message;
+                document.getElementById('result-user').textContent = data.user;
+                document.getElementById('result-count').textContent = data.requestsLeft;
+                document.getElementById('result-card').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Reset error:', error);
+                alert(`Error: ${error.message || 'Failed to reset API requests'}`);
+            } finally {
+                // Reset button state
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                text.textContent = 'Reset API Count';
+            }
+        });
+    </script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
