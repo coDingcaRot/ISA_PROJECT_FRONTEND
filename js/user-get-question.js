@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         const qAudioContainer = document.getElementById('questionAudioContainer');
-        const aAudioContainer = document.getElementById('questionAudioContainer');
+        const aAudioContainer = document.getElementById('answerAudioContainer');
         qAudioContainer.innerHTML = '<div class="loader"></div>';
         aAudioContainer.innerHTML = '<div class="loader"></div>';
 
@@ -46,8 +46,33 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// function convertAudioFromBase64(base64Audio, containerId, mimeType) {
+//     // Convert base64 to binary
+//     const binaryString = atob(base64Audio);
+//     const len = binaryString.length;
+//     const bytes = new Uint8Array(len);
+
+//     for (let i = 0; i < len; i++) {
+//         bytes[i] = binaryString.charCodeAt(i);
+//     }
+
+//     // Create a Blob from binary data
+//     const audioBlob = new Blob([bytes], { type: mimeType });
+
+//     // Generate a URL for the Blob
+//     const audioURL = URL.createObjectURL(audioBlob);
+
+//     // Create an <audio> element and set the source
+//     const audioElement = document.createElement("audio");
+//     audioElement.controls = true;
+//     audioElement.src = audioURL;
+
+//     // Append to the container
+//     document.getElementById(containerId).innerHTML = ''; // Clear previous audio
+//     document.getElementById(containerId).appendChild(audioElement);
+// }
+
 function convertAudioFromBase64(base64Audio, containerId, mimeType) {
-    document.getElementById(containerId).innerHTML = 'Loading ...';
     // Convert base64 to binary
     const binaryString = atob(base64Audio);
     const len = binaryString.length;
@@ -68,8 +93,35 @@ function convertAudioFromBase64(base64Audio, containerId, mimeType) {
     audioElement.controls = true;
     audioElement.src = audioURL;
 
-    // Append to the container
-    document.getElementById(containerId).innerHTML = ''; // Clear previous audio
-    document.getElementById(containerId).appendChild(audioElement);
-}
+    // Create download button
+    const downloadButton = document.createElement("button");
+    downloadButton.innerHTML = `<img src="../img/download-icon.svg" alt="Download" style="width: 24px; height: 24px;">`;
+    downloadButton.style.marginLeft = "10px";
 
+    // Add event listener to trigger download
+    downloadButton.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default action
+
+        const downloadLink = document.createElement("a");
+        downloadLink.href = audioURL;
+        downloadLink.download = "audio.mp3";
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(audioURL);
+    });
+
+    // Create a container for audio and download button
+    const audioContainer = document.createElement("div");
+    audioContainer.style.display = "flex";
+    audioContainer.style.alignItems = "center";
+
+    // Append audio and download button to the container
+    audioContainer.appendChild(audioElement);
+    audioContainer.appendChild(downloadButton);
+
+    // Append the container to the parent container
+    document.getElementById(containerId).innerHTML = '';
+    document.getElementById(containerId).appendChild(audioContainer);
+}
