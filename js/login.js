@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/checkUser', true);
-        xhttp.open('POST', 'http://localhost:3000/checkUser', true);
+        xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/checkUser', true);
+        // xhttp.open('POST', 'http://localhost:3000/checkUser', true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.withCredentials = true;
         
