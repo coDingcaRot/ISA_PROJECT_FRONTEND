@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4) {
                 const data = JSON.parse(this.responseText);
-
                 if (this.status === 200) {
 
                     //data message
@@ -39,38 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        xhttp.open('GET', `https://isa-project-backend-ultkx.ondigitalocean.app/getQuestion/${id}`, true);
+        // xhttp.open('GET', `https://isa-project-backend-ultkx.ondigitalocean.app/getQuestion/${id}`, true);
+        xhttp.open('GET', `http://localhost:3000/getQuestion/${id}`, true);
         xhttp.withCredentials = true;
         xhttp.send();
     });
 });
-
-
-// function convertAudioFromBase64(base64Audio, containerId, mimeType) {
-//     // Convert base64 to binary
-//     const binaryString = atob(base64Audio);
-//     const len = binaryString.length;
-//     const bytes = new Uint8Array(len);
-
-//     for (let i = 0; i < len; i++) {
-//         bytes[i] = binaryString.charCodeAt(i);
-//     }
-
-//     // Create a Blob from binary data
-//     const audioBlob = new Blob([bytes], { type: mimeType });
-
-//     // Generate a URL for the Blob
-//     const audioURL = URL.createObjectURL(audioBlob);
-
-//     // Create an <audio> element and set the source
-//     const audioElement = document.createElement("audio");
-//     audioElement.controls = true;
-//     audioElement.src = audioURL;
-
-//     // Append to the container
-//     document.getElementById(containerId).innerHTML = ''; // Clear previous audio
-//     document.getElementById(containerId).appendChild(audioElement);
-// }
 
 function convertAudioFromBase64(base64Audio, containerId, mimeType) {
     // Convert base64 to binary
