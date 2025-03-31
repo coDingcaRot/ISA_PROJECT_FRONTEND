@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     document.getElementById('user-email').textContent = user.email;
                     document.getElementById('user-id').textContent = user.id;
                     document.getElementById('account-type').textContent = user.admin ? 'Admin' : 'Standard User';
-                    document.getElementById('api-usage-count').textContent = user.apiRequestsLeft;
+                    document.getElementById('api-usage-count').textContent = data.user.apiUsage.requestsLeft;
                     
                     // Update profile picture with initials
                     const profilePic = document.querySelector('.profile-pic');

@@ -1,0 +1,117 @@
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    color: white;
+    min-height: 100vh;
+    padding: 20px;
+}
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+.btn-custom {
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    padding: 10px 20px;
+}
+.btn-primary {
+    background: #ff7eb3;
+    border: none;
+}
+.btn-primary:hover {
+    background: #ff4f88;
+    transform: translateY(-2px);
+}
+.btn-secondary {
+    background: #6c757d;
+    border: none;
+}
+.btn-secondary:hover {
+    background: #5a6268;
+}
+.table-custom {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.table-custom th {
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: none;
+}
+.table-custom td {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    vertical-align: middle;
+}
+.badge-admin {
+    background: #ff7eb3;
+    color: #1f1c2c;
+}
+.badge-user {
+    background: #6c757d;
+}
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+.api-count {
+    font-weight: bold;
+    color: #ff7eb3;
+}
+.pagination .page-item .page-link {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+}
+.pagination .page-item.active .page-link {
+    background: #ff7eb3;
+    border-color: #ff7eb3;
+}
+.pagination .page-item.disabled .page-link {
+    background: rgba(255, 255, 255, 0.05);
+    color: #6c757d;
+}
+.btn-danger-custom {
+    background: #dc3545;
+    border: none;
+}
+.btn-danger-custom:hover {
+    background: #bb2d3b;
+}
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+.api-usage {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(76,72,72);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+}
+.reload-btn {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.reload-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
