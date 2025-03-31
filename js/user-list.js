@@ -146,7 +146,7 @@ async function deleteUser(userId, email) {
     if (!confirm(`Are you sure you want to permanently delete user ${email}?`)) return;
     
     try {
-        const response = await fetch(`https://isa-project-frontend-yvfn.onrender.com/deleteUser/${userId}`, {
+        const response = await fetch(`isa-project-backend-ultkx.ondigitalocean.app/deleteUser/${userId}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
