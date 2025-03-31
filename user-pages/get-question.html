@@ -10,29 +10,11 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/user-page-css/update-question.css">
     <link rel="stylesheet" href="../css/user-page-css/get-question.css">
+
+    <!-- Sweet Alerts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
     <title>Get Question</title>
-    <style>
-        .loader-container { /* Parent container of the loader */
-            display: flex;
-            justify-content: center; /* Horizontal centering */
-            align-items: center; /* Vertical centering */
-            /* If you need to set a height on the parent container, do it here. */
-        }
-
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
 </head>
 <body>
     <div class="card shadow-sm">
@@ -59,5 +41,8 @@
     
     <script src="../js/check-authentication.js"></script>
     <script src="../js/user-get-question.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </body>
 </html>

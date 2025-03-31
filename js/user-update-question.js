@@ -17,12 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.readyState == 4) {
                 const data = JSON.parse(this.responseText);
                 if (this.status == 200) {
-                    alert(`${data.message}`);
+                    Swal.fire({
+                        title : data.message,
+                        icon : 'success'
+                    })
                 } else {
                     try {
-                        alert(`${data.message}`);
+                        Swal.fire({
+                            title : data.message,
+                            icon : 'error'
+                        })
                     } catch (error) {
-                        alert('Internal Server Error');
+                        Swal.fire({
+                            title : `500 Internal Server Error`,
+                            icon : 'error'
+                        })
                     }
                 }
             }

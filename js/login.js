@@ -17,8 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (this.status == 200) {
                     //authenticate its cookie and based on the result of that cookie we can either go through or not.
                     const data = JSON.parse(this.responseText);
-
-                    alert('Login successful!');
+                    // Swal.fire({
+                    //     title : `Login Successful`,
+                    //     icon : `success`
+                    // })
                     if (data.admin === true) {
                         window.location.href = 'admin-homepage.html';
                         return
@@ -28,11 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } else {
                     try {
-                        const data = JSON.parse(this.responseText);
-                        alert(data.message || 'Login failed. Please check your credentials.');
+                        Swal.fire({
+                            title : `Login Failed. Please Check Credentials`,
+                            icon : `error`
+                        })
                     } catch (error) {
-                        alert('Login failed. Please try again.');
-                        console.log(error)
+                        Swal.fire({
+                            title : `500 Internal Server Error`,
+                            icon : `error`
+                        })
                     }
                 }
             }

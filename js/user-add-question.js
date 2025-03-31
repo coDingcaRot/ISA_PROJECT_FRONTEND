@@ -16,13 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.readyState == 4) {
                 if (this.status == 201) {
                     const data = JSON.parse(this.responseText);
-                    alert(`${data.message} \nQuestion ID : ${data.questionId}`);
-                    location.reload();
+                    const message = `${data.message} \nQuestion ID : ${data.questionId}`
+                    Swal.fire({
+                        title: `${message}`,
+                        icon: "success",
+                      });
                 } else {
                     try {
-                        alert(data.message || 'Error adding question. Please try again');
+                        Swal.fire({
+                            title : `${data.message}`,
+                            icon : 'error'
+                        })
                     } catch (error) {
-                        alert("Internal Server Error");
+                        Swal.fire({
+                            title : `500 \nInternal Server Error`,
+                            icon : `error`
+                        })
                     }
                 }
             }
