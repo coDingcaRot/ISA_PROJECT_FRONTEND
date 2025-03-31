@@ -10,34 +10,57 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPassword = document.getElementById('confirmPassword').value;
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match!');
+            Swal.fire({
+                title : `Passwords do not match!`,
+                icon : `error`
+            })
             return;
         }
 
         if (password.length < 6) {
-            alert('Password must be at least 6 characters long!');
+            Swal.fire({
+                title : `Password must be at least 6 characters long!`,
+                icon : `error`
+            })
             return;
         }
 
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
-                if (this.status == 200) {
+                if (this.status == 201) {
                     const data = JSON.parse(this.responseText);
-                    alert('Account created successfully!');
-                    window.location.href = 'user-homepage.html';
+
+                    Swal.fire({
+                        title: `${data.message}`,
+                        icon: 'success',
+                    }).then(() => {
+                        // Swal.fire animation and popup is finished here
+                    
+                        setTimeout(() => {
+                            window.location.href = '/login.html';
+                        }, 1000); // 1000 milliseconds (1 second) delay
+                    });
                 } else {
                     try {
                         const data = JSON.parse(this.responseText);
-                        alert(data.message || 'Error creating account. Please try again.');
+                        
+                        Swal.fire({
+                            title : `${data.message}`,
+                            icon : `error`
+                        })
                     } catch (error) {
-                        alert('Error creating account. Please try again.');
+                        Swal.fire({
+                            title : `500 Internal Server Error`,
+                            icon : `error`
+                        })
                     }
                 }
             }
         };
 
-        xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/createUser', true);
+        // xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/createUser', true);
+        xhttp.open('POST', 'http://localhost:3000/createUser', true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
 
         const data = JSON.stringify({

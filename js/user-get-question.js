@@ -20,9 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.readyState === 4) {
                 const data = JSON.parse(this.responseText);
                 if (this.status === 200) {
-
-                    //data message
-                    alert(data.message);
+                    Swal.fire({
+                        title : data.message,
+                        icon : 'success'
+                    })
 
                     // converting audio bytes
                     if (data.questionAudio) {
@@ -30,10 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     // converting answer audio bytes
                     if (data.answerAudio) {
-                        convertAudioFromBase64(data.answerAudio, "answerAudioContainer", "audio/mp3"); // Change to "audio/wav" if needed
+                        convertAudioFromBase64(data.answerAudio, "answerAudioContainer", "audio/mp3");
                     }
                 } else {
-                    alert(data.message);
+                    Swal.fire({
+                        title : data.message,
+                        icon : 'error'
+                    })
                 }
             }
         };
@@ -73,7 +77,7 @@ function convertAudioFromBase64(base64Audio, containerId, mimeType) {
 
     // Add event listener to trigger download
     downloadButton.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default action
+        event.preventDefault(); // Prevent default action of refreshing page
 
         const downloadLink = document.createElement("a");
         downloadLink.href = audioURL;

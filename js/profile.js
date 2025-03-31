@@ -21,17 +21,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                     profilePic.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=ff7eb3&color=fff`;
                 } else {
                     try {
-                        alert(data.message);
+                        Swal.fire({
+                            title : data.message,
+                            icon : 'error'
+                        })
                     } catch (error) {
-                        alert(`500 internal server error`);
+                        Swal.fire({
+                            title : `500 Internal Server Error`,
+                            icon : 'error'
+                        })                    
                     }
                 }
             }
         } catch (e) {
-            alert(`500 Internal Server Error`)
+            Swal.fire({
+                title : `500 Internal Server Error`,
+                icon : 'error'
+            })            
         }
     };
 
+    // add production 
     xhttp.open('GET', 'http://localhost:3000/getUser', true);
     xhttp.withCredentials = true;
     xhttp.send();
@@ -40,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Logout functionality
 document.getElementById('logout-btn').addEventListener('click', async () => {
     try {
-        const response = await fetch('http://localhost:3000/logout', {
+        const response = await fetch('http://localhost:3000/logout', { //make a production call
             method: 'POST',
             credentials: 'include'
         });

@@ -14,20 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const id = document.getElementById("questionId").value.trim();
 
-        if (!id) {
-            alert("Please enter a valid Question ID.");
-            return;
-        }
-
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4) {
                 const data = JSON.parse(this.responseText);
-                console.log(data)
                 if (this.status === 200) {
-                    alert(data.message || "Question deleted successfully!");
+                    Swal.fire({
+                        title : data.message,
+                        icon : 'success'
+                    })
                 } else {
-                    alert(data.message || "An error occurred while deleting the question.");
+                    Swal.fire({
+                        title : data.message,
+                        icon : 'error'
+                    })
                 }
             }
         };
