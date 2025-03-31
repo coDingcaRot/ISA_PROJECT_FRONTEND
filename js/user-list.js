@@ -9,7 +9,7 @@ async function fetchAllUsers(page = 1) {
         document.getElementById('loading-spinner').style.display = 'flex';
         document.getElementById('users-table-body').innerHTML = '';
         
-        const response = await fetch(`https://isa-project-frontend-yvfn.onrender.com/getAllUsers?page=${page}&limit=${usersPerPage}`, {
+        const response = await fetch(`isa-project-backend-ultkx.ondigitalocean.app/getAllUsers?page=${page}&limit=${usersPerPage}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -119,7 +119,7 @@ async function resetUserApi(email) {
     if (!confirm(`Reset API requests for ${email} to 20?`)) return;
     
     try {
-        const response = await fetch('https://isa-project-frontend-yvfn.onrender.com/resetApiRequests', {
+        const response = await fetch('isa-project-backend-ultkx.ondigitalocean.app/resetApiRequests', {
             method: 'POST',
             credentials: 'include',
             headers: {
