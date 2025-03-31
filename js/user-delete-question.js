@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // xhttp.open('DELETE', `https://isa-project-backend-ultkx.ondigitalocean.app/deleteQuestion/${id}`, true); // production
-        xhttp.open('DELETE', `http://localhost:3000/deleteQuestion/${id}`, true); // testing
+        xhttp.open('DELETE', `https://isa-project-backend-ultkx.ondigitalocean.app/deleteQuestion/${id}`, true); // production
+        // xhttp.open('DELETE', `http://localhost:3000/deleteQuestion/${id}`, true); // testing
         xhttp.withCredentials = true;
         xhttp.send();
     });

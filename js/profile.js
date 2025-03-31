@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // add production 
-    xhttp.open('GET', 'http://localhost:3000/getUser', true);
+    xhttp.open('GET', 'https://isa-project-frontend-yvfn.onrender.com/getUser', true);
     xhttp.withCredentials = true;
     xhttp.send();
 });
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Logout functionality
 document.getElementById('logout-btn').addEventListener('click', async () => {
     try {
-        const response = await fetch('http://localhost:3000/logout', { //make a production call
+        const response = await fetch('https://isa-project-frontend-yvfn.onrender.com/logout', { //make a production call
             method: 'POST',
             credentials: 'include'
         });

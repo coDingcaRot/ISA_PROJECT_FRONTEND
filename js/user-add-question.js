@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/createQuestion', true);
-        xhttp.open('POST', 'http://localhost:3000/createQuestion');
+        xhttp.open('POST', 'https://isa-project-backend-ultkx.ondigitalocean.app/createQuestion', true);
+        // xhttp.open('POST', 'http://localhost:3000/createQuestion');
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.withCredentials = true;
         const data = JSON.stringify({

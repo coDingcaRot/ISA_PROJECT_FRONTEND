@@ -13,7 +13,7 @@ async function fetchApiStats() {
         document.getElementById('loading-spinner').style.display = 'flex';
         document.getElementById('api-stats-body').innerHTML = '';
         
-        const response = await fetch('http://localhost:3000/getApiStats', {
+        const response = await fetch('https://isa-project-frontend-yvfn.onrender.com/getApiStats', {
             method: 'GET',
             credentials: 'include'
         });
@@ -69,7 +69,7 @@ async function loadUserData() {
     try {
         document.getElementById("api-usage-count").innerText = "Loading...";
         
-        const response = await fetch('http://localhost:3000/getUser', {
+        const response = await fetch('https://isa-project-frontend-yvfn.onrender.com/getUser', {
             method: 'GET',
             credentials: 'include'
         });

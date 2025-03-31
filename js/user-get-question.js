@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // xhttp.open('GET', `https://isa-project-backend-ultkx.ondigitalocean.app/getQuestion/${id}`, true);
-        xhttp.open('GET', `http://localhost:3000/getQuestion/${id}`, true);
+        xhttp.open('GET', `https://isa-project-backend-ultkx.ondigitalocean.app/getQuestion/${id}`, true);
+        // xhttp.open('GET', `http://localhost:3000/getQuestion/${id}`, true);
         xhttp.withCredentials = true;
         xhttp.send();
     });

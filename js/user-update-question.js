@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // xhttp.open('PUT', 'https://isa-project-backend-ultkx.ondigitalocean.app/updateQuestion', true);
-        xhttp.open('PUT', 'http://localhost:3000/updateQuestion', true);
+        xhttp.open('PUT', 'https://isa-project-backend-ultkx.ondigitalocean.app/updateQuestion', true);
+        // xhttp.open('PUT', 'http://localhost:3000/updateQuestion', true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.withCredentials = true;
         const data = JSON.stringify({

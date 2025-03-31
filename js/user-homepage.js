@@ -2,7 +2,7 @@ async function loadUserData() {
     try {
         document.getElementById("api-usage-count").innerText = "Loading...";
         
-        const response = await fetch('http://localhost:3000/getUser', {
+        const response = await fetch('https://isa-project-frontend-yvfn.onrender.com/getUser', {
             method: 'GET',
             credentials: 'include' // Sends cookies automatically
         });
@@ -35,12 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault(); // Prevent default link behavior
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://localhost:3000/api-docs'); // Replace with your actual URL
+            xhr.open('GET', 'https://isa-project-frontend-yvfn.onrender.com/api-docs'); // Replace with your actual URL
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) { // Request is complete
                     if (xhr.status >= 200 && xhr.status < 300) { // Success
-                        window.location.href = 'http://localhost:3000/api-docs';
+                        window.location.href = 'https://isa-project-frontend-yvfn.onrender.com/api-docs';
                     } else { // Server error
                         window.location.href = '/unavailable.html';
                     }
