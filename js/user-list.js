@@ -9,7 +9,7 @@ async function fetchAllUsers(page = 1) {
         document.getElementById('loading-spinner').style.display = 'flex';
         document.getElementById('users-table-body').innerHTML = '';
         
-        const response = await fetch(`isa-project-backend-ultkx.ondigitalocean.app/getAllUsers?page=${page}&limit=${usersPerPage}`, {
+        const response = await fetch(`https://isa-project-backend-ultkx.ondigitalocean.app/getAllUsers?page=${page}&limit=${usersPerPage}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -119,7 +119,7 @@ async function resetUserApi(email) {
     if (!confirm(`Reset API requests for ${email} to 20?`)) return;
     
     try {
-        const response = await fetch('isa-project-backend-ultkx.ondigitalocean.app/resetApiRequests', {
+        const response = await fetch('https://isa-project-backend-ultkx.ondigitalocean.app/resetApiRequests', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -146,7 +146,7 @@ async function deleteUser(userId, email) {
     if (!confirm(`Are you sure you want to permanently delete user ${email}?`)) return;
     
     try {
-        const response = await fetch(`isa-project-backend-ultkx.ondigitalocean.app/deleteUser/${userId}`, {
+        const response = await fetch(`https://isa-project-backend-ultkx.ondigitalocean.app/deleteUser/${userId}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
@@ -172,7 +172,7 @@ async function loadUserData() {
     try {
         document.getElementById("api-usage-count").innerText = "Loading...";
         
-        const response = await fetch('isa-project-backend-ultkx.ondigitalocean.app/getUser', {
+        const response = await fetch('https://isa-project-backend-ultkx.ondigitalocean.app/getUser', {
             method: 'GET',
             credentials: 'include' // Sends cookies automatically
         });

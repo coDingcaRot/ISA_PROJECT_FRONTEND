@@ -10,7 +10,7 @@ async function fetchApiStats() {
         document.getElementById('loading-spinner').style.display = 'flex';
         document.getElementById('api-stats-body').innerHTML = '';
         
-        const response = await fetch('isa-project-backend-ultkx.ondigitalocean.app/getApiStats', {
+        const response = await fetch('https://isa-project-backend-ultkx.ondigitalocean.app/getApiStats', {
             method: 'GET',
             credentials: 'include'
         });
@@ -66,7 +66,7 @@ async function loadUserData() {
     try {
         document.getElementById("api-usage-count").innerText = "Loading...";
         
-        const response = await fetch('isa-project-backend-ultkx.ondigitalocean.app/getUser', {
+        const response = await fetch('https://isa-project-backend-ultkx.ondigitalocean.app/getUser', {
             method: 'GET',
             credentials: 'include'
         });
