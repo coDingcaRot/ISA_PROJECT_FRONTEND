@@ -2,7 +2,7 @@ async function loadUserData() {
     try {
         document.getElementById("api-usage-count").innerText = "Loading...";
         
-        const response = await fetch('https://isa-project-frontend-yvfn.onrender.com/getUser', {
+        const response = await fetch('isa-project-backend-ultkx.ondigitalocean.app/getUser', {
             method: 'GET',
             credentials: 'include' // Sends cookies automatically
         });
@@ -35,12 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault(); // Prevent default link behavior
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://isa-project-frontend-yvfn.onrender.com/api-docs'); // Replace with your actual URL
+            xhr.open('GET', 'isa-project-backend-ultkx.ondigitalocean.app/api-docs'); // Replace with your actual URL
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) { // Request is complete
                     if (xhr.status >= 200 && xhr.status < 300) { // Success
-                        window.location.href = 'https://isa-project-frontend-yvfn.onrender.com/api-docs';
+                        window.location.href = 'isa-project-backend-ultkx.ondigitalocean.app/api-docs';
                     } else { // Server error
                         window.location.href = '/unavailable.html';
                     }
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function hidAdmin() {
     try {
-        const response = await fetch('https://isa-project-frontend-yvfn.onrender.com/getUser', {
+        const response = await fetch('isa-project-backend-ultkx.ondigitalocean.app/getUser', {
             method: 'GET',
             credentials: 'include'
         });

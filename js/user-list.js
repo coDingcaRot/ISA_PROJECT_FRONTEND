@@ -172,7 +172,7 @@ async function loadUserData() {
     try {
         document.getElementById("api-usage-count").innerText = "Loading...";
         
-        const response = await fetch('https://isa-project-frontend-yvfn.onrender.com/getUser', {
+        const response = await fetch('isa-project-backend-ultkx.ondigitalocean.app/getUser', {
             method: 'GET',
             credentials: 'include' // Sends cookies automatically
         });
