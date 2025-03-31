@@ -1,5 +1,3 @@
-
-// Sample data - in a real app, you would fetch this from your backend
 const apiEndpoints = [
     { method: 'GET', endpoint: '/getQuestion/:id', requests: 0, description: 'Retrieve a specific question' },
     { method: 'POST', endpoint: '/createQuestion', requests: 0, description: 'Create a new question' },
@@ -7,7 +5,6 @@ const apiEndpoints = [
     { method: 'DELETE', endpoint: '/deleteQuestion/:id', requests: 0, description: 'Delete a question' }
 ];
 
-// In a real app, you would fetch this from your backend
 async function fetchApiStats() {
     try {
         document.getElementById('loading-spinner').style.display = 'flex';
