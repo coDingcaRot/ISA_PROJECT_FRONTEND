@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - User Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .btn-custom {
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+            padding: 10px 20px;
+        }
+        .btn-primary {
+            background: #ff7eb3;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: #ff4f88;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .table-custom {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table-custom th {
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: none;
+        }
+        .table-custom td {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: middle;
+        }
+        .badge-admin {
+            background: #ff7eb3;
+            color: #1f1c2c;
+        }
+        .badge-user {
+            background: #6c757d;
+        }
+        .spinner-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .api-count {
+            font-weight: bold;
+            color: #ff7eb3;
+        }
+        .pagination .page-item .page-link {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+        }
+        .pagination .page-item.active .page-link {
+            background: #ff7eb3;
+            border-color: #ff7eb3;
+        }
+        .pagination .page-item.disabled .page-link {
+            background: rgba(255, 255, 255, 0.05);
+            color: #6c757d;
+        }
+        .btn-danger-custom {
+            background: #dc3545;
+            border: none;
+        }
+        .btn-danger-custom:hover {
+            background: #bb2d3b;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .api-usage {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(76,72,72);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            gap: 15px;
+        }
+        .reload-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .reload-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-people-fill"></i> User Management</h2>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-custom table-hover">
+                    <thead>
+                        <tr>
+                            <th><i class="bi bi-person"></i> Username</th>
+                            <th><i class="bi bi-envelope"></i> Email</th>
+                            <th><i class="bi bi-shield"></i> Role</th>
+                            <th><i class="bi bi-activity"></i> API Requests</th>
+                            <th><i class="bi bi-gear"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="loading-spinner" class="spinner-container">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <nav aria-label="User pagination">
+                <ul class="pagination justify-content-center mt-3" id="pagination">
+                    <!-- Pagination will be loaded here -->
+                </ul>
+            </nav>
+            
+            <div class="d-flex justify-content-between mt-3">
+                <a href="./user-homepage.html" class="btn btn-secondary btn-custom">
+                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                </a>
+                <!-- API Usage Section -->
+                <div class="api-usage text-white">
+                    <span>API Usage Left: <strong id="api-usage-count">Loading...</strong></span>
+                    <button class="reload-btn" onclick="loadUserData()">Reload</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let currentPage = 1;
+        const usersPerPage = 20;
+        let totalUsers = 0;
+        
+        async function fetchAllUsers(page = 1) {
+            try {
+                currentPage = page;
+                document.getElementById('loading-spinner').style.display = 'flex';
+                document.getElementById('users-table-body').innerHTML = '';
+                
+                const response = await fetch(`http://localhost:3000/getAllUsers?page=${page}&limit=${usersPerPage}`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+                
+                const data = await response.json();
+                totalUsers = data.totalCount;
+                displayUsers(data.users);
+                setupPagination(totalUsers);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('users-table-body').innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-danger">Error loading users: ${error.message}</td>
+                    </tr>
+                `;
+            } finally {
+                document.getElementById('loading-spinner').style.display = 'none';
+            }
+        }
+        
+        function displayUsers(users) {
+            const tableBody = document.getElementById('users-table-body');
+            
+            if (users.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center">No users found</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tableBody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <span class="badge rounded-pill ${user.admin ? 'badge-admin' : 'badge-user'}">
+                            ${user.admin ? 'Admin' : 'User'}
+                        </span>
+                    </td>
+                    <td class="api-count">${user.apiRequestsLeft}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-outline-dark" onclick="resetUserApi('${user.email}')">
+                                <i class="bi bi-arrow-clockwise"></i> Reset
+                            </button>
+                            <button class="btn btn-sm btn-danger-custom" onclick="deleteUser('${user._id}', '${user.email}')">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function setupPagination(totalUsers) {
+            const totalPages = Math.ceil(totalUsers / usersPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            pagination.innerHTML = '';
+            
+            // Previous button
+            pagination.innerHTML += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="fetchAllUsers(${currentPage - 1})" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                pagination.innerHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="fetchAllUsers(${i})">${i}</a>
+                    </li>
+                `;
+            }
+            
+            // Next button
+            pagination.innerHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="fetchAllUsers(${currentPage + 1})" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            `;
+        }
+        
+        async function resetUserApi(email) {
+            if (!confirm(`Reset API requests for ${email} to 20?`)) return;
+            
+            try {
+                const response = await fetch('http://localhost:3000/resetApiRequests', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+                
+                const result = await response.json();
+                alert(`Success: ${result.message}\nNew count: ${result.requestsLeft}`);
+                fetchAllUsers(currentPage); // Refresh current page
+                
+            } catch (error) {
+                console.error('Reset error:', error);
+                alert(`Error: ${error.message || 'Failed to reset API requests'}`);
+            }
+        }
+
+        async function deleteUser(userId, email) {
+            if (!confirm(`Are you sure you want to permanently delete user ${email}?`)) return;
+            
+            try {
+                const response = await fetch(`http://localhost:3000/deleteUser/${userId}`, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+                
+                const result = await response.json();
+                alert(`Success: ${result.message}`);
+                fetchAllUsers(currentPage); // Refresh current page
+                
+            } catch (error) {
+                console.error('Delete error:', error);
+                alert(`Error: ${error.message || 'Failed to delete user'}`);
+            }
+        }
+
+        async function loadUserData() {
+            try {
+                document.getElementById("api-usage-count").innerText = "Loading...";
+                
+                const response = await fetch('http://localhost:3000/getUser', {
+                    method: 'GET',
+                    credentials: 'include' // Sends cookies automatically
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+
+                const data = await response.json();
+                
+                // Simply use the count from the response body
+                document.getElementById("api-usage-count").innerText = data.user.apiRequestsLeft;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById("api-usage-count").innerText = "Error";
+            }
+        }
+
+
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', loadUserData);
+        
+        // Load users when page opens
+        document.addEventListener('DOMContentLoaded', () => fetchAllUsers(1));
+    </script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
